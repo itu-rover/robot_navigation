@@ -22,17 +22,17 @@ parser.add_argument('x', nargs='?', type=float, default=0.0)
 parser.add_argument('y', nargs='?', type=float, default=0.0)
 parser.add_argument('theta', nargs='?', type=float, default=0.0)
 parser.add_argument('-f', '--frame_id', default='map')
-parser.add_argument('-n', '--namespace', default='/locomotor/')
+parser.add_argument('-n', '--namespace', default='/locomotor')
 args = parser.parse_args()
 
 rospy.init_node('send_action', anonymous=True)
 client = actionlib.SimpleActionClient(args.namespace + '/navigate', NavigateToPoseAction)
 client.wait_for_server()
 goal = NavigateToPoseGoal()
-goal.goal.pose.x = args.x
-goal.goal.pose.y = args.y
-goal.goal.pose.theta = args.theta
-goal.goal.header.frame_id = args.frame_id
+goal.goal.pose.x = -1.0
+goal.goal.pose.y = 0.0
+goal.goal.pose.theta = 0.0
+goal.goal.header.frame_id = "map"
 client.send_goal(goal, feedback_cb = print_feedback)
 client.wait_for_result()
 print(client.get_result())
