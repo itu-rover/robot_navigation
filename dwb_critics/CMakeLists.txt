@@ -41,6 +41,8 @@ add_library(${PROJECT_NAME}
     src/prefer_forward.cpp
     src/rotate_to_goal.cpp
     src/twirling.cpp
+    src/rotate_before_start.cpp
+    src/titrek.cpp
 )
 add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
