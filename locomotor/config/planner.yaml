@@ -60,13 +60,13 @@ DWBLocalPlanner:
   decel_lim_y: 0.0
   decel_lim_theta: -3.2
   # absolute speeds (in either direction)
-  min_speed_xy: 0.1
-  max_speed_xy: 0.5
+  min_speed_xy: 0.0
+  max_speed_xy: 0.8
   min_speed_theta: 0.3
 
   goal_checker_name: dwb_plugins::StoppedGoalChecker
   xy_goal_tolerance: 0.5
-  yaw_goal_tolerance: 0.3
+  yaw_goal_tolerance: 0.2
   latch_xy_goal_tolerance: false
 
   sim_time: 2.0
