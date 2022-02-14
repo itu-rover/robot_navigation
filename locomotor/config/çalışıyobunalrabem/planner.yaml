@@ -4,11 +4,6 @@ global_plan_type: Path3D
 global_plan_epsilon: -1.0
 twist_topic: cmd_vel
 twist_type: Twist3D
-recovery_behavior_enabled: true
-
-NavfnROS:
-  allow_unknown: true # Specifies whether or not to allow navfn to create plans that traverse unknown space.
-  default_tolerance: 1.0 # A tolerance on the goal point for the planner.
 
 DluxGlobalPlanner:
   neutral_cost: 50
@@ -32,9 +27,6 @@ DluxGlobalPlanner:
   iteration_factor: 4.0
   grid_step_near_high: false
 
-LocalPlannerAdapter:
-  planner_name: dwb_local_planner::DWBLocalPlanner
-
 DWBLocalPlanner:
   update_costmap_before_planning: true
   prune_plan: false
@@ -47,33 +39,38 @@ DWBLocalPlanner:
   # velocities
   min_vel_x: 0.0 #eski
   max_vel_x: 1.0 #eski
-  
+
+  max_vel_x: 0.5
+  min_vel_x: 0.0
+
+  min_vel_y: 0.0
+  max_vel_y: 0.4
+
   max_vel_theta: 1.0
   min_vel_theta: -1.0
-  min_in_place_vel_theta: 0.4
+  min_in_place_vel_theta: 0.2
+#added after dwa
+  max_trans_vel: 0.5
+  min_trans_vel: 0.1
+  max_rot_vel: 1.0
+  min_rot_vel: 0.2
   # acceleration 
-  acc_lim_x: 3.2
+  acc_lim_x: 1.0
   acc_lim_y: 0
-  acc_lim_theta: 3.2
+  acc_lim_th: 3.2
   # deceleration
-  decel_lim_x: -1.2
+  decel_lim_x: -3.2
   decel_lim_y: 0.0
   decel_lim_theta: -3.2
   # absolute speeds (in either direction)
-  min_speed_xy: 0.0
-  max_speed_xy: 0.8
+  min_speed_xy: 0.1
+  max_speed_xy: 0.3
   min_speed_theta: 0.3
 
-  goal_checker_name: dwb_plugins::StoppedGoalChecker
+  goal_checker_name: dwb_plugins::SimpleGoalChecker
   xy_goal_tolerance: 0.5
-  yaw_goal_tolerance: 0.2
+  yaw_goal_tolerance: 0.5
   latch_xy_goal_tolerance: false
-
-  sim_time: 2.0
-  linear_granularity: 0.05
-  vx_samples: 10
-  vy_samples: 0
-  vtheta_samples: 10
 
   critics:
   - PreferForward
@@ -85,9 +82,7 @@ DWBLocalPlanner:
   - GoalDist
   - GoalAlign
 
-  - RotateBeforeStart
-  - Titrek
-
+  # PreferForward critic
   PreferForward:
     backward_cost: 1.0
     forward_cost: 0.0
@@ -103,7 +98,7 @@ DWBLocalPlanner:
 
   # Oscillation critic
   Oscillation:
-    x_only_threshold: -0.05
+    x_only_threshold: 0.05
     oscillation_reset_dist: 0.05
     oscillation_reset_angle: 0.05
     oscillation_reset_time: -1.0
