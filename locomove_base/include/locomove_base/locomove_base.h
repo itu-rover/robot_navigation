@@ -41,6 +41,7 @@
 #include <nav_core/recovery_behavior.h>
 #include <string>
 #include <vector>
+#include "locomove_base/osci.h"
 
 namespace locomove_base
 {
@@ -57,6 +58,10 @@ public:
   void resetState();
 protected:
   void requestNavigationFailure(const locomotor_msgs::ResultCode& result);
+
+  //bne yazdım
+  bool stopper_func(locomove_base::osci::Request &req, locomove_base::osci::Response &res);
+  //bne yazdım
 
   void planLoopCallback(const ros::TimerEvent& event);
   void requestGlobalCostmapUpdate();
@@ -137,6 +142,10 @@ protected:
   costmap_2d::Costmap2DROS* getCostmapPointer(const nav_core2::Costmap::Ptr& costmap);
   costmap_2d::Costmap2DROS* planner_costmap_ros_;
   costmap_2d::Costmap2DROS* controller_costmap_ros_;
+
+  //bne yazdım
+  ros::ServiceServer ss;
+  //bne yazdım
 
   // Debug Publishing
   ros::Publisher goal_pub_;

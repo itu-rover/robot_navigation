@@ -13,4 +13,6 @@
   <depend>nav_core_adapter</depend>
   <depend>custom_recovery</depend>
   <test_depend>roslint</test_depend>
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
 </package>

@@ -4,11 +4,9 @@
   <arg name="base_global_planner" default="navfn/NavfnROS"/> -->
   <!-- <arg name="base_global_planner" default="nav_core_adapter::GlobalPlannerAdapter"/> -->
   <arg name="base_local_planner" default="nav_core_adapter::LocalPlannerAdapter"/>
-  <node name="cmd_vel_manipulator" pkg="locomove_base" type="oscillation_handler.py" output="screen"></node>
+  <!--<node name="cmd_vel_manipulator" pkg="locomove_base" type="oscillation_handler.py" output="screen"></node>-->
   <node name="locomove_base" pkg="locomove_base" type="move_base" output="screen" launch-prefix="$(arg prefix)">
-
-	<param name="footprint" value="[[-0.6, -0.6], [-0.6, 0.6], [0.6, 0.6], [0.6, -0.6]]"/>
-
+  <param name="global_costmap/obstacles_laser/laser/inf_is_valid" value="true"/>
     <param name="base_global_planner" value="$(arg base_global_planner)"/>
     <param name="base_local_planner" value="$(arg base_local_planner)"/>
     <rosparam file="$(find locomotor)/config/planner.yaml" command="load"/>
@@ -27,8 +25,12 @@
 
     <!-- global costmap with laser, for odom_navigation_demo -->
     <rosparam file="$(find locomotor)/config/costmap_global_laser.yaml" command="load" ns="global_costmap" if="$(arg no_static_map)"/>
-    <param name="global_costmap/width" value="100.0" if="$(arg no_static_map)"/>
-    <param name="global_costmap/height" value="100.0" if="$(arg no_static_map)"/>
+    <param name="global_costmap/width" value="40.0" if="$(arg no_static_map)"/>
+    <param name="global_costmap/height" value="40.0" if="$(arg no_static_map)"/>
+    <param name="global_costmap/update_frequency" value="8.0"/>
+    <param name="global_costmap/resolution" value="0.15"/>
+    <!--<param name="global_costmap/obstacles_laser/laser/inf_is_valid" value="false"/>--> <!-- Obstacles are not cleared unless those areas are seen from the sensor (LaserScan, /scan) again, use if 360 degree lidar data is possible. Otherwise rover might not find a path since it cannot update the places behind itself. -->
 
+  <remap from="/cmd_vel" to="/nav_vel" />
   </node>
 </launch>

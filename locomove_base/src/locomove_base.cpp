@@ -39,6 +39,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "locomove_base/osci.h"
 
 namespace locomove_base
 {
@@ -151,12 +152,23 @@ const ros::NodeHandle& loadBackwardsCompatibleParameters(const ros::NodeHandle& 
   return nh;
 }
 
+//bne yazdım
+bool LocoMoveBase::stopper_func(locomove_base::osci::Request &req, locomove_base::osci::Response &res){
+  this->onNavigationCompleted();
+  return true;
+}
+//bne yazdım
+
 LocoMoveBase::LocoMoveBase(const ros::NodeHandle& nh) :
   private_nh_(nh), locomotor_(loadBackwardsCompatibleParameters(nh)),
   server_(ros::NodeHandle(), "move_base", false),
   recovery_loader_("nav_core", "nav_core::RecoveryBehavior"),
   local_planning_ex_(private_nh_, false), global_planning_ex_(private_nh_)
 {
+  //bne yazdım
+  ROS_INFO("hoho");
+  ss = private_nh_.advertiseService("stopper_service", &LocoMoveBase::stopper_func, this);
+  //bne yazdım
   private_nh_.param("planner_frequency", planner_frequency_, planner_frequency_);
   if (planner_frequency_ > 0.0)
   {
@@ -421,8 +433,10 @@ void LocoMoveBase::onNavigationCompleted()
   {
     server_.setSucceeded();
   }
+
   plan_loop_timer_.stop();
   control_loop_timer_.stop();
+  publishZeroVelocity();
 }
 
 void LocoMoveBase::onNavigationFailure(const locomotor_msgs::ResultCode result)
@@ -493,7 +507,6 @@ bool LocoMoveBase::loadRecoveryBehaviors(ros::NodeHandle node)
   if (!node.getParam("recovery_behaviors", behavior_list))
   {
     std::cout << node.getParam("recovery_behaviors", behavior_list) << std::endl;
-    std::cout <<  "bombabombabombabomba.com " << behavior_list << std::endl;
     // if no recovery_behaviors are specified, we'll just load the defaults
     return false;
   }
