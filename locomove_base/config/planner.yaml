@@ -92,7 +92,7 @@ DWBLocalPlanner:
   - PathAlign
   - GoalDist
   - GoalAlign
-#  - ObstacleFootprintCritic
+  # - ObstacleFootprintCritic
   
   # - RotateBeforeStart
   #- Titrek
