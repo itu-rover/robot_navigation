@@ -86,10 +86,12 @@ double RotateToGoalCritic::scoreTrajectory(const dwb_msgs::Trajectory2D& traj)
   // If we're not sufficiently close to the goal, we don't care what the twist is
   if (!in_window_)
   {
+    // ROS_INFO("NOT IN WINDOW!"); 
     return 0.0;
   }
   else if (!rotating_)
   {
+    ROS_INFO("NOT ROTATING!");
     double speed_sq = hypot_sq(traj.velocity.x, traj.velocity.y);
     if (speed_sq >= current_xy_speed_sq_)
     {

@@ -1,0 +1,46 @@
+footprint_topic: "footprint"
+robot_radius: 0.6 #0.8485
+footprint_padding: 0.1 #0.01 
+footprint: [[-0.55, -0.4], [-0.55, 0.4], [0.60, 0.4], [0.60, -0.40]] # for navigation
+
+
+robot_base_frame: base_link #base_footprint
+update_frequency: 6.0 #10.0 #1.0  
+publish_frequency: 5.0 #10.0 #1 #4.0 #3.0
+transform_tolerance: 1.5
+
+resolution: 0.1 #0.05
+
+obstacle_range: 3 #5.5
+raytrace_range: 4 #6.0
+
+# obstacles_laser:
+#     footprint_clearing_enabled: true
+
+#     observation_sources: laser
+#     laser: {data_type: LaserScan, clearing: true, marking: true, topic: /scan, inf_is_valid: true}
+#     subscribe_to_updates: true
+
+
+# obstacles_laser:
+#  observation_sources: point_cloud_sensor
+#  point_cloud_sensor: {
+#    data_type: PointCloud2,
+#    clearing: true,
+#    marking: true,
+#    topic: /cloud
+#  }
+
+obstacles_laser:
+  observation_sources: scan
+  scan: {
+    data_type: LaserScan,
+    clearing: true,
+    marking: true,
+    topic: /sick_scan,
+    min_obstacle_height: 0.0,
+    inf_is_valid: true
+  }
+
+inflation:
+  inflation_radius: 0.7 # was 1.0, 2.0

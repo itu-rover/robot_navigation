@@ -179,6 +179,7 @@ LocoMoveBase::LocoMoveBase(const ros::NodeHandle& nh) :
   controller_costmap_ros_ = getCostmapPointer(locomotor_.getLocalCostmap());
 
   goal_pub_ = private_nh_.advertise<geometry_msgs::PoseStamped>("current_goal", 1);
+  reach_pub_ = private_nh_.advertise<std_msgs::String>("is_reached", 1);
 
   private_nh_.param("recovery_behavior_enabled", recovery_behavior_enabled_, recovery_behavior_enabled_);
 
@@ -417,6 +418,9 @@ void LocoMoveBase::onLocalPlanningException(nav_core2::NavCore2ExceptionPtr e_pt
 void LocoMoveBase::onNavigationCompleted()
 {
   ROS_INFO_NAMED("Locomotor", "Plan completed! Stopping.");
+  std_msgs::String msg;
+  msg.data = "done";
+  reach_pub_.publish(msg);
   if (server_.isActive())
   {
     server_.setSucceeded();

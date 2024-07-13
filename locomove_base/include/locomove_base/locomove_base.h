@@ -140,6 +140,7 @@ protected:
 
   // Debug Publishing
   ros::Publisher goal_pub_;
+  ros::Publisher reach_pub_;
 };
 }  // namespace locomove_base
 
