@@ -7,7 +7,7 @@ footprint: [[-0.55, -0.4], [-0.55, 0.4], [0.60, 0.4], [0.60, -0.40]] # for navig
 robot_base_frame: base_link #base_footprint
 update_frequency: 6.0 #10.0 #1.0  
 publish_frequency: 5.0 #10.0 #1 #4.0 #3.0
-transform_tolerance: 1.5
+transform_tolerance: 1.0 #1.5
 
 resolution: 0.1 #0.05
 
@@ -22,25 +22,26 @@ raytrace_range: 4 #6.0
 #     subscribe_to_updates: true
 
 
-# obstacles_laser:
-#  observation_sources: point_cloud_sensor
-#  point_cloud_sensor: {
-#    data_type: PointCloud2,
-#    clearing: true,
-#    marking: true,
-#    topic: /cloud
-#  }
-
 obstacles_laser:
-  observation_sources: scan
-  scan: {
-    data_type: LaserScan,
-    clearing: true,
-    marking: true,
-    topic: /sick_scan,
-    min_obstacle_height: 0.0,
-    inf_is_valid: true
-  }
+#  footprint_clearing_enabled: true #new
+ observation_sources: point_cloud_sensor
+ point_cloud_sensor: {
+   data_type: PointCloud2,
+   clearing: true,
+   marking: true,
+   topic: /ouster/points
+ }
+
+# obstacles_laser:
+#   observation_sources: scan
+#   scan: {
+#     data_type: LaserScan,
+#     clearing: true,
+#     marking: true,
+#     topic: /scan,
+#     min_obstacle_height: 0.0,
+#     inf_is_valid: true
+#   }
 
 inflation:
   inflation_radius: 0.7 # was 1.0, 2.0

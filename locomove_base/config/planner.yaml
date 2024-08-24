@@ -48,7 +48,7 @@ DWBLocalPlanner:
 
   trajectory_generator_name: dwb_plugins::StandardTrajectoryGenerator
   # velocities
-  min_vel_x: -0.2 #-0.2 #0.1
+  min_vel_x: 0.3 #-0.2 #0.1
   max_vel_x: 3 #1.4
 
   min_vel_y: 0.0 
@@ -66,13 +66,13 @@ DWBLocalPlanner:
   decel_lim_y: 0.0
   decel_lim_theta: -4
   # absolute speeds (in either direction)
-  min_speed_xy: -0.5 #0.0
+  min_speed_xy: 0.3 #0.0
   max_speed_xy: 1 #0.5
   min_speed_theta: 0.0 #0.0
   max_speed_theta: 0.3 #1.8
 
   goal_checker_name: dwb_plugins::SimpleGoalChecker
-  xy_goal_tolerance: 0.5 #1.0
+  xy_goal_tolerance: 0.3 #0.5 #1.0
   yaw_goal_tolerance: 0.5 #3.14 # 0.4
   latch_xy_goal_tolerance: true
 
@@ -98,17 +98,17 @@ DWBLocalPlanner:
   #- Titrek
 
   PreferForward:
-    backward_cost: 0.8  #1.0
-    forward_cost: 0.2 #0.0
+    backward_cost: 1.0  #0.8
+    forward_cost: 0.0 #0.2
     scale: 1
 
   # RotateToGoal critic
   RotateToGoal:
-    xy_goal_tolerance: 0.3 #0.1
+    xy_goal_tolerance: 0.3 #0.3 #0.1
     trans_stopped_velocity: 0.1
     slowing_factor: 5.0
     lookahead_time: -1.0
-    scale: 5 #20
+    scale: 20 #5
 
   # Oscillation critic
   Oscillation:
